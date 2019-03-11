@@ -1,0 +1,95 @@
+<html>
+  <head>
+    <title>YouTopics</title>
+
+	  <style type="text/css">
+		body{
+		background:lightblue;
+		font-family:avenir;
+		}
+		h1{
+		background: silver;
+		}
+		a:link, a:visited {
+  		background-color: grey;
+  		color: white;
+  		padding: 15px 25px;
+ 		 text-align: center;
+ 		 text-decoration: none;
+ 		 display: inline-block;
+		}
+
+		a:hover, a:active {
+  		background-color: silver;
+		}
+
+
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+		</style>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+
+	</script>
+  </head>
+  <body>
+  	<a href="http://127.0.0.1:5000/static/about.html">About</a>
+
+	<br>
+    <h1> YouTopics </h1>
+	Name Your Topic:<br>
+	<input id="topic" type="text"/><br>
+	Pick Five Keywords (comma separated):<br>
+	<input id="keys" type="text" size="60" /><br>
+	Youtube Video URL: <br>
+	<input id="url" type="text" size="60" /><br><br>
+	<button id="name-button">Analyze</button>
+
+	<p id="Keywords"></p>
+	<p id="Cosine"></p>
+	<p id="Summary"></p>
+
+	<div class="loader" id="img" style="display:none" ></div>
+
+
+
+	<script>
+
+		$("#name-button").click(function(event){
+			$('#img').show();
+			let message = {
+				topic: $("#topic").val(), keys: $("#keys").val(), url: $("#url").val()
+			}
+			console.log(message)
+			$.post("http://127.0.0.1:5000/analyze", JSON.stringify(message), function(response){
+				$('#img').hide();
+				$("#Cosine").text("Cosine Similarity "+JSON.stringify(response.Analysis));
+				$("#Keywords").text("Keywords "+JSON.stringify(response.Keys));
+				$("#Summary").text("Summary "+JSON.stringify(response.Summary));
+				console.log(response);
+			});
+		});
+	</script>
+  </body>
+</html>
