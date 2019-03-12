@@ -37,7 +37,7 @@ def get_keywords():
     key_string = message['keys']
     keys_clean = key_string.replace(' ','')
     keys = keys_clean.split(",")
-    td[f'{topic}'] = keys
+    td['{0}'.format(topic)] = keys
     response = topic_analyze(url, td)
     return jsonify(response)
 

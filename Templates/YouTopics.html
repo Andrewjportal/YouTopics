@@ -54,7 +54,7 @@
 	</script>
   </head>
   <body>
-  	<a href="http://127.0.0.1:5000/static/about.html">About</a>
+  	<a href="http://YouTopics.appspot.com/about.html">About</a>
 
 	<br>
     <h1> YouTopics </h1>
@@ -82,7 +82,7 @@
 				topic: $("#topic").val(), keys: $("#keys").val(), url: $("#url").val()
 			}
 			console.log(message)
-			$.post("http://127.0.0.1:5000/analyze", JSON.stringify(message), function(response){
+			$.post("http://YouTopics.appspot.com/analyze", JSON.stringify(message), function(response){
 				$('#img').hide();
 				$("#Cosine").text("Cosine Similarity "+JSON.stringify(response.Analysis));
 				$("#Keywords").text("Keywords "+JSON.stringify(response.Keys));
@@ -90,6 +90,15 @@
 				console.log(response);
 			});
 		});
+		$(document).ready(function(){
+
+	    $(document).ajaxError(function(){
+		alert("An error occured!")
+		$('#img').hide();
+		});
+
+  });
+
 	</script>
   </body>
 </html>

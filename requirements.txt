@@ -1,0 +1,8 @@
+pytube==9.4.0
+numpy==1.15.4
+gensim==3.4.0
+flask==1.0.2
+Flask-Cors==3.0.7
+bleach==3.0.2
+pattern==3.6
+gunicorn

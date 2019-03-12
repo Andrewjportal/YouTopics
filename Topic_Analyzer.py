@@ -131,24 +131,29 @@ def topic_analyze(url,topic_dict):
     analysis={}
 
     for key, value in topic_dict.items():
-        topic_dict_vectors[f'{key}']=keywords_to_vect(value)
+        topic_dict_vectors['{0}'.format(key)] = keywords_to_vect(value)
     for key, value in topic_dict_vectors.items():
-        analysis[f'{key}'] = str(round(cos_sim(x,value),3))
-    
-    clean_doc=remove_stopwords(doc[0])
-    keys=keywords(clean_doc,words=5,pos_filter=('NN','NNS','NNPS','NNP',),lemmatize=True,split=True)
+        analysis['{0}'.format(key)] = str(round(cos_sim(x, value), 3))
 
-    summary=summarize(doc[0],word_count=50, split=True)
-    return {'Keys':keys, 'Summary':summary,'Analysis':analysis}
-
-
+    clean_doc = remove_stopwords(doc[0])
+    keys = keywords(clean_doc, words=5, pos_filter=('NN', 'NNS', 'NNPS', 'NNP',), lemmatize=True, split=True)
+    keys = [str(r) for r in keys]
+    summary = summarize(doc[0], word_count=50, split=True)
+    summary = [str(r) for r in summary]
+    summary = ''.join(summary)
+    return {'Keys': keys, 'Summary': summary, 'Analysis': analysis}
 # In[10]:
 
 
 from gensim.test.utils import datapath, get_tmpfile
 from gensim.models import KeyedVectors
+import os
+#Need reference word embeddings in same directory leas fi
+dirname = os.path.dirname(__file__)
+filename = os.path.join(dirname, 'glove.6B.50d.txt')
 
-glove_file = datapath('/Users/andrewportal/Downloads/glove/glove.6B.100d.txt')
+
+glove_file = datapath(filename)
 tmp_file = get_tmpfile("glove_word2vec.txt")
 
 # call glove2word2vec script
